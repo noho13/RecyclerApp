@@ -7,6 +7,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -35,7 +36,9 @@ class TestDataGeneration {
 
     @Test
     fun randomDateGenerator_shouldGenerateDatesBetweenStartDateAndEndDate() {
-        val date = DataGeneration.randomDate()
+        val dateAsString = DataGeneration.randomDate()
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = sdf.parse(dateAsString)
         assertThat(date.time, greaterThan(startDate.time))
         assertThat(date.time, lessThan(endDate.time))
     }
@@ -61,7 +64,8 @@ class TestDataGeneration {
         calendar.set(Calendar.MONTH, 0)
         calendar.set(Calendar.WEEK_OF_YEAR, 3)
         val dateWithinThirdWeek = calendar.time
-        val weekForDate = DataGeneration.getCalendarWeekForDate(dateWithinThirdWeek)
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val weekForDate = DataGeneration.getCalendarWeekForDate(sdf.format(dateWithinThirdWeek))
         assertThat(weekForDate, `is`("Week 3"))
     }
 

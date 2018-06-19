@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.daimler.tss.recyclerapp.R
-import com.daimler.tss.recyclerapp.items.BookItem
+import com.daimler.tss.recyclerapp.db.Book
 import com.daimler.tss.recyclerapp.items.Item
 import com.daimler.tss.recyclerapp.items.SectionItem
 import com.daimler.tss.recyclerapp.items.VerticalItem
@@ -37,7 +37,7 @@ class RecyclerViewAdapter(private val data: List<Item>) : RecyclerView.Adapter<R
 
     override fun getItemViewType(position: Int): Int {
         val item = data[position]
-        return item.getId()
+        return item.getLayoutId()
     }
 
     class VerticalViewHolder(item: View, viewType: Int) : RecyclerView.ViewHolder(item) {
@@ -60,14 +60,14 @@ class RecyclerViewAdapter(private val data: List<Item>) : RecyclerView.Adapter<R
 
         fun bindItem(item: Item) {
             when {
-                item.getId() == R.layout.vertical_item -> carousel.apply {
+                item.getLayoutId() == R.layout.vertical_item -> carousel.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = (item as VerticalItem).recyclerViewAdapter
                     setHasFixedSize(true)
                 }
-                item.getId() == R.layout.section_item -> headerText.text = (item as SectionItem).calendarWeek
+                item.getLayoutId() == R.layout.section_item -> headerText.text = (item as SectionItem).calendarWeek
                 else -> {
-                    bookTitle.text = (item as BookItem).title
+                    bookTitle.text = (item as Book).title
                     bookDescription.text = item.description + " " + item.publicationDate
                 }
             }

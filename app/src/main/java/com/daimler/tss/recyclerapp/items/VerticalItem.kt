@@ -9,6 +9,6 @@ import com.daimler.tss.recyclerapp.adapter.RecyclerViewAdapter
  */
 data class VerticalItem(val recyclerViewAdapter: RecyclerViewAdapter) : Item {
 
-    override fun getId() = R.layout.vertical_item
+    override fun getLayoutId() = R.layout.vertical_item
 
 }

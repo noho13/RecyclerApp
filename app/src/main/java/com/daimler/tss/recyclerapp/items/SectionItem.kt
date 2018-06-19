@@ -8,6 +8,6 @@ import com.daimler.tss.recyclerapp.R
  */
 class SectionItem(val calendarWeek: String) : Item {
 
-    override fun getId() = R.layout.section_item
+    override fun getLayoutId() = R.layout.section_item
 
 }

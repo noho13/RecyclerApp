@@ -5,5 +5,5 @@ package com.daimler.tss.recyclerapp.items
  * Copyright (c) 2018. Daimler AG. All rights reserved.
  */
 interface Item {
-    fun getId(): Int
+    fun getLayoutId(): Int
 }

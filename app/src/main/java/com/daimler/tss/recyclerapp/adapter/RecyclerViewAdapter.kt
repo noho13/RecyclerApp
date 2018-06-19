@@ -68,7 +68,7 @@ class RecyclerViewAdapter(private val data: List<Item>) : RecyclerView.Adapter<R
                 item.getId() == R.layout.section_item -> headerText.text = (item as SectionItem).calendarWeek
                 else -> {
                     bookTitle.text = (item as BookItem).title
-                    bookDescription.text = item.description
+                    bookDescription.text = item.description + " " + item.publicationDate
                 }
             }
         }

@@ -1,11 +1,10 @@
-package com.daimler.tss.recyclerapp.time
+package com.daimler.tss.recyclerapp.data
 
 import com.daimler.tss.recyclerapp.adapter.RecyclerViewAdapter
 import com.daimler.tss.recyclerapp.db.Book
 import com.daimler.tss.recyclerapp.items.Item
 import com.daimler.tss.recyclerapp.items.SectionItem
 import com.daimler.tss.recyclerapp.items.VerticalItem
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 
@@ -28,10 +27,9 @@ object DataGeneration {
         endDate = calendar.time
     }
 
-    fun randomDate(): String {
+    fun randomDate(): Date {
         val random = ThreadLocalRandom.current().nextLong(startDate.time, endDate.time)
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return sdf.format(Date(random))
+        return Date(random)
     }
 
     fun sortBookItems(items: List<Book>, descending: Boolean = false): List<Book> {
@@ -48,9 +46,7 @@ object DataGeneration {
         return MutableList(40) { getBookItem() }
     }
 
-    fun getCalendarWeekForDate(dateAsString: String): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val date = sdf.parse(dateAsString)
+    fun getCalendarWeekForDate(date: Date): String {
         val cal = Calendar.getInstance()
         cal.time = date
         val week = cal.get(Calendar.WEEK_OF_YEAR)

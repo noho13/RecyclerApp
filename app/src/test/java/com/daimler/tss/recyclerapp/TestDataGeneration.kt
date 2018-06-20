@@ -1,13 +1,12 @@
 package com.daimler.tss.recyclerapp
 
-import com.daimler.tss.recyclerapp.time.DataGeneration
+import com.daimler.tss.recyclerapp.data.DataGeneration
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -36,9 +35,7 @@ class TestDataGeneration {
 
     @Test
     fun randomDateGenerator_shouldGenerateDatesBetweenStartDateAndEndDate() {
-        val dateAsString = DataGeneration.randomDate()
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val date = sdf.parse(dateAsString)
+        val date = DataGeneration.randomDate()
         assertThat(date.time, greaterThan(startDate.time))
         assertThat(date.time, lessThan(endDate.time))
     }
@@ -64,8 +61,7 @@ class TestDataGeneration {
         calendar.set(Calendar.MONTH, 0)
         calendar.set(Calendar.WEEK_OF_YEAR, 3)
         val dateWithinThirdWeek = calendar.time
-        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val weekForDate = DataGeneration.getCalendarWeekForDate(sdf.format(dateWithinThirdWeek))
+        val weekForDate = DataGeneration.getCalendarWeekForDate(dateWithinThirdWeek)
         assertThat(weekForDate, `is`("Week 3"))
     }
 

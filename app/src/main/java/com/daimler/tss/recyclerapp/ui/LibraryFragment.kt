@@ -10,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.daimler.tss.recyclerapp.R
 import com.daimler.tss.recyclerapp.adapter.RecyclerViewAdapter
+import com.daimler.tss.recyclerapp.injection.Injection
 import com.daimler.tss.recyclerapp.items.Item
 import com.daimler.tss.recyclerapp.viewmodel.LibraryViewModel
+import com.daimler.tss.recyclerapp.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fr_main.*
 
 /**
@@ -19,6 +21,9 @@ import kotlinx.android.synthetic.main.fr_main.*
  * Copyright (c) 2018. Daimler AG. All rights reserved.
  */
 class LibraryFragment : Fragment() {
+
+    private lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var libViewModel: LibraryViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fr_main, container, false)
@@ -28,22 +33,25 @@ class LibraryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         var recyclerViewAdapter: RecyclerViewAdapter
-        val libViewModel = ViewModelProviders.of(this).get(LibraryViewModel::class.java)
-        libViewModel.data.observe(this, Observer { data: List<Item>? ->
-            data?.let {
-                recyclerViewAdapter = RecyclerViewAdapter(data)
-                rv_vertical.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    setHasFixedSize(true)
-                    adapter = recyclerViewAdapter
+        context?.let {
+            viewModelFactory = Injection.provideViewModelFactory(it)
+            libViewModel = ViewModelProviders.of(this, viewModelFactory).get(LibraryViewModel::class.java)
+            libViewModel.generateData()
+            libViewModel.data.observe(this, Observer { data: List<Item>? ->
+                data?.let {
+                    recyclerViewAdapter = RecyclerViewAdapter(data)
+                    rv_vertical.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        setHasFixedSize(true)
+                        adapter = recyclerViewAdapter
+                    }
                 }
-            }
-        })
-        libViewModel.loadData()
+            })
+            libViewModel.loadData()
+        }
     }
 
     companion object {
         fun createInstance() = LibraryFragment()
     }
-
 }

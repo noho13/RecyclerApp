@@ -3,6 +3,7 @@ package com.daimler.tss.recyclerapp.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.daimler.tss.recyclerapp.data.DataGeneration
+import com.daimler.tss.recyclerapp.data.Resource
 import com.daimler.tss.recyclerapp.db.BookDao
 import com.daimler.tss.recyclerapp.items.Item
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,33 +16,40 @@ import io.reactivex.schedulers.Schedulers
  */
 class LibraryViewModel(private val bookDao: BookDao) : ViewModel() {
 
-    val data = MutableLiveData<List<Item>>()
+    val data = MutableLiveData<Resource<List<Item>>>()
     lateinit var disposable: Disposable
+    private var sortDescending = true
 
     fun generateData() {
-        Thread({
-            val list = DataGeneration.getBooks()
-            bookDao.insertAll(list)
-        }).start()
-    }
-
-    fun loadData() {
         if (data.value == null) {
-            disposable = bookDao
-                    .getAll()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(
-                            {
-                                data.value = DataGeneration.addSectionHeadersToList(it)
-                            },
-                            { t: Throwable -> }
-                    )
+            Thread({
+                bookDao.deleteAllBooks()
+                val list = DataGeneration.generateBooks()
+                bookDao.insertAll(list)
+            }).start()
         }
     }
 
+    fun loadData() {
+        data.value = Resource.loading(null)
+        disposable = bookDao
+                .getAll()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map {
+                    sortDescending = !sortDescending
+                    if (sortDescending) it.sortedByDescending { it.publicationDate } else it
+                }
+                .map { DataGeneration.addSectionHeadersToList(it) }
+                .map { Resource.success(it) }
+                .subscribe(
+                        { data.value = it },
+                        { data.value = Resource.error("oops, an error", null) }
+                )
+    }
+
     override fun onCleared() {
-        super.onCleared()
         disposable.dispose()
+        super.onCleared()
     }
 }

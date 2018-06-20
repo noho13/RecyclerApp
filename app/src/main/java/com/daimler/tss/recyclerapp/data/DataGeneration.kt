@@ -1,5 +1,6 @@
 package com.daimler.tss.recyclerapp.data
 
+import android.support.annotation.VisibleForTesting
 import com.daimler.tss.recyclerapp.adapter.RecyclerViewAdapter
 import com.daimler.tss.recyclerapp.db.Book
 import com.daimler.tss.recyclerapp.items.Item
@@ -27,25 +28,19 @@ object DataGeneration {
         endDate = calendar.time
     }
 
+    @VisibleForTesting
     fun randomDate(): Date {
         val random = ThreadLocalRandom.current().nextLong(startDate.time, endDate.time)
         return Date(random)
     }
 
-    fun sortBookItems(items: List<Book>, descending: Boolean = false): List<Book> {
-        return if (descending) {
-            items.sortedByDescending { it.publicationDate }
-        } else {
-            items.sortedBy { it.publicationDate }
-        }
-    }
+    private fun getBookItem() = Book(null, "book title", "book description", randomDate())
 
-    fun getBookItem() = Book(null, "booktitle", "book description", randomDate())
-
-    fun getBooks(): MutableList<Book> {
+    fun generateBooks(): MutableList<Book> {
         return MutableList(40) { getBookItem() }
     }
 
+    @VisibleForTesting
     fun getCalendarWeekForDate(date: Date): String {
         val cal = Calendar.getInstance()
         cal.time = date

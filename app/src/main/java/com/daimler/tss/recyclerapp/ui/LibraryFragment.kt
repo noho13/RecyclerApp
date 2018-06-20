@@ -5,11 +5,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.daimler.tss.recyclerapp.R
 import com.daimler.tss.recyclerapp.adapter.RecyclerViewAdapter
+import com.daimler.tss.recyclerapp.data.Resource
+import com.daimler.tss.recyclerapp.data.Status
 import com.daimler.tss.recyclerapp.injection.Injection
 import com.daimler.tss.recyclerapp.items.Item
 import com.daimler.tss.recyclerapp.viewmodel.LibraryViewModel
@@ -25,6 +25,11 @@ class LibraryFragment : Fragment() {
     private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var libViewModel: LibraryViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fr_main, container, false)
     }
@@ -37,18 +42,50 @@ class LibraryFragment : Fragment() {
             viewModelFactory = Injection.provideViewModelFactory(it)
             libViewModel = ViewModelProviders.of(this, viewModelFactory).get(LibraryViewModel::class.java)
             libViewModel.generateData()
-            libViewModel.data.observe(this, Observer { data: List<Item>? ->
-                data?.let {
-                    recyclerViewAdapter = RecyclerViewAdapter(data)
-                    rv_vertical.apply {
-                        layoutManager = LinearLayoutManager(context)
-                        setHasFixedSize(true)
-                        adapter = recyclerViewAdapter
+            libViewModel.data.observe(this, Observer { resource: Resource<List<Item>>? ->
+                resource?.let {
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            pb_library.visibility = View.GONE
+                            resource.data?.let {
+                                recyclerViewAdapter = RecyclerViewAdapter(resource.data)
+                                rv_vertical.apply {
+                                    layoutManager = LinearLayoutManager(context)
+                                    setHasFixedSize(true)
+                                    adapter = recyclerViewAdapter
+                                }
+                            }
+                        }
+                        Status.LOADING -> {
+                            pb_library.visibility = View.VISIBLE
+                        }
+                        Status.ERROR -> {
+                            pb_library.visibility = View.GONE
+                        }
                     }
                 }
             })
-            libViewModel.loadData()
+
+
+            if (savedInstanceState == null) {
+                libViewModel.loadData()
+            }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.sort_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if (item?.itemId == R.id.sort) {
+            libViewModel.loadData()
+            true
+        } else {
+            return super.onOptionsItemSelected(item)
+        }
+
     }
 
     companion object {

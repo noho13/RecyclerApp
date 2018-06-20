@@ -40,19 +40,6 @@ class TestDataGeneration {
         assertThat(date.time, lessThan(endDate.time))
     }
 
-    @Test
-    fun sortBooksAscending() {
-        val listOfBookItems = listOf(DataGeneration.getBookItem(), DataGeneration.getBookItem())
-        val result = DataGeneration.sortBookItems(listOfBookItems, false)
-        assertThat(result[0].publicationDate, lessThan(result[1].publicationDate))
-    }
-
-    @Test
-    fun sortBooksDescending() {
-        val listOfBookItems = listOf(DataGeneration.getBookItem(), DataGeneration.getBookItem())
-        val result = DataGeneration.sortBookItems(listOfBookItems, true)
-        assertThat(result[0].publicationDate, greaterThan(result[1].publicationDate))
-    }
 
     @Test
     fun calendarWeekForDate() {

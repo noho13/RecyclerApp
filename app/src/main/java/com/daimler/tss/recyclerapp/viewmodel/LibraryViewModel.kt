@@ -17,7 +17,7 @@ import io.reactivex.schedulers.Schedulers
 class LibraryViewModel(private val bookDao: BookDao) : ViewModel() {
 
     val data = MutableLiveData<Resource<List<Item>>>()
-    lateinit var disposable: Disposable
+    private lateinit var disposable: Disposable
     private var sortDescending = true
 
     fun generateData() {

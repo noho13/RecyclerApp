@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import android.widget.Toast
 import com.daimler.tss.recyclerapp.R
 import com.daimler.tss.recyclerapp.adapter.RecyclerViewAdapter
 import com.daimler.tss.recyclerapp.data.Resource
@@ -61,6 +62,7 @@ class LibraryFragment : Fragment() {
                         }
                         Status.ERROR -> {
                             pb_library.visibility = View.GONE
+                            Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

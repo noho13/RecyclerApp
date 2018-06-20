@@ -22,6 +22,7 @@ class LibraryViewModel(private val bookDao: BookDao) : ViewModel() {
 
     fun generateData() {
         if (data.value == null) {
+            data.value = Resource.loading(null)
             Thread({
                 bookDao.deleteAllBooks()
                 val list = DataGeneration.generateBooks()

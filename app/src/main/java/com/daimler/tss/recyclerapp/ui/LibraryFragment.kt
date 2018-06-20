@@ -38,7 +38,11 @@ class LibraryFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        var recyclerViewAdapter: RecyclerViewAdapter
+        val recyclerViewAdapter = RecyclerViewAdapter(listOf())
+        rv_vertical.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+        }
         context?.let {
             viewModelFactory = Injection.provideViewModelFactory(it)
             libViewModel = ViewModelProviders.of(this, viewModelFactory).get(LibraryViewModel::class.java)
@@ -49,12 +53,8 @@ class LibraryFragment : Fragment() {
                         Status.SUCCESS -> {
                             pb_library.visibility = View.GONE
                             resource.data?.let {
-                                recyclerViewAdapter = RecyclerViewAdapter(resource.data)
-                                rv_vertical.apply {
-                                    layoutManager = LinearLayoutManager(context)
-                                    setHasFixedSize(true)
-                                    adapter = recyclerViewAdapter
-                                }
+                                recyclerViewAdapter.data = resource.data
+                                rv_vertical.adapter = recyclerViewAdapter
                             }
                         }
                         Status.LOADING -> {
@@ -67,7 +67,6 @@ class LibraryFragment : Fragment() {
                     }
                 }
             })
-
 
             if (savedInstanceState == null) {
                 libViewModel.loadData()

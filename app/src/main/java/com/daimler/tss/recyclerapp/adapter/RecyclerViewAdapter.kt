@@ -16,7 +16,7 @@ import com.daimler.tss.recyclerapp.items.VerticalItem
  * Created by Daimler TSS GmbH on 18.06.18 13:22.
  * Copyright (c) 2018. Daimler AG. All rights reserved.
  */
-class RecyclerViewAdapter(private val data: List<Item>) : RecyclerView.Adapter<RecyclerViewAdapter.VerticalViewHolder>() {
+class RecyclerViewAdapter(var data: List<Item>) : RecyclerView.Adapter<RecyclerViewAdapter.VerticalViewHolder>() {
 
     private val viewPool = RecyclerView.RecycledViewPool()
 

@@ -1,10 +1,10 @@
 package com.daimler.tss.recyclerapp.db
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import io.reactivex.Flowable
 
 
 /**
@@ -15,7 +15,7 @@ import io.reactivex.Flowable
 interface BookDao {
 
     @Query("SELECT * FROM book ORDER BY publicationDate ASC")
-    fun getAll(): Flowable<List<Book>>
+    fun getBooks(): LiveData<List<Book>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(books: List<Book>)

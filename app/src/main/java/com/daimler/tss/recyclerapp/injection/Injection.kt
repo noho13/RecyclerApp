@@ -1,8 +1,10 @@
 package com.daimler.tss.recyclerapp.injection
 
 import android.content.Context
+import com.daimler.tss.recyclerapp.AppExecutors
 import com.daimler.tss.recyclerapp.db.BookDao
 import com.daimler.tss.recyclerapp.db.BookDatabase
+import com.daimler.tss.recyclerapp.repo.LibraryRepo
 import com.daimler.tss.recyclerapp.viewmodel.ViewModelFactory
 
 /**
@@ -16,8 +18,13 @@ object Injection {
         return database.bookDao()
     }
 
+    private fun provideLibraryRepo(bookDao: BookDao) = LibraryRepo(bookDao, AppExecutors())
+
     fun provideViewModelFactory(context: Context): ViewModelFactory {
         val dataSource = provideBookDataSource(context)
-        return ViewModelFactory(dataSource)
+        val repo = provideLibraryRepo(dataSource)
+        return ViewModelFactory(repo)
     }
+
+
 }

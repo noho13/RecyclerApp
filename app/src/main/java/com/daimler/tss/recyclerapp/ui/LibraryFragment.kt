@@ -25,6 +25,7 @@ class LibraryFragment : Fragment() {
 
     private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var libViewModel: LibraryViewModel
+    private lateinit var recyclerViewAdapter: RecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,7 @@ class LibraryFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val recyclerViewAdapter = RecyclerViewAdapter(listOf())
+        recyclerViewAdapter = RecyclerViewAdapter(listOf())
         rv_vertical.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
@@ -46,7 +47,6 @@ class LibraryFragment : Fragment() {
         context?.let {
             viewModelFactory = Injection.provideViewModelFactory(it)
             libViewModel = ViewModelProviders.of(this, viewModelFactory).get(LibraryViewModel::class.java)
-            libViewModel.generateData()
             libViewModel.data.observe(this, Observer { resource: Resource<List<Item>>? ->
                 resource?.let {
                     when (resource.status) {
@@ -67,10 +67,7 @@ class LibraryFragment : Fragment() {
                     }
                 }
             })
-
-            if (savedInstanceState == null) {
-                libViewModel.loadData()
-            }
+            libViewModel.loadData()
         }
     }
 
@@ -81,7 +78,7 @@ class LibraryFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return if (item?.itemId == R.id.sort) {
-            libViewModel.loadData()
+//            libViewModel.toggleSortOrder()
             true
         } else {
             return super.onOptionsItemSelected(item)

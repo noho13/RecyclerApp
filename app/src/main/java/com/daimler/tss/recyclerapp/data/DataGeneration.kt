@@ -34,11 +34,7 @@ object DataGeneration {
         return Date(random)
     }
 
-    private fun getBookItem() = Book(null, "book title", "book description", randomDate())
-
-    fun generateBooks(): MutableList<Book> {
-        return MutableList(40) { getBookItem() }
-    }
+    internal fun getBookItem() = Book(null, "book title", "book description", randomDate())
 
     @VisibleForTesting
     fun getCalendarWeekForDate(date: Date): String {

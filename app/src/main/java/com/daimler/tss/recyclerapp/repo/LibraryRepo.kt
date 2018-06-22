@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.Observer
 import android.arch.persistence.db.SimpleSQLiteQuery
+import android.util.Log
 import com.daimler.tss.recyclerapp.AppExecutors
 import com.daimler.tss.recyclerapp.data.DataGeneration
 import com.daimler.tss.recyclerapp.data.Resource
@@ -23,13 +24,17 @@ class LibraryRepo(private val bookDao: BookDao, private val executors: AppExecut
         result.value = Resource.loading(null)
         val query = sortBooks(sortAscending)
         executors.diskIO().execute {
+            Log.d("LibraryRep - diskIO", "current thread ${Thread.currentThread().name}")
             val fromDB = bookDao.getBooks(query)
             val observer = object : Observer<List<Book>> {
                 override fun onChanged(t: List<Book>?) {
+                    Log.d("LibraryRep - onChanged", "current thread ${Thread.currentThread().name}")
                     fromDB.removeObserver(this)
                     executors.diskIO().execute {
+                        Log.d("LibraryRep - diskIO", "current thread ${Thread.currentThread().name}")
                         if (shouldGenerateBooks(t)) {
                             val bookData = generateBooks()
+                            Thread.sleep(2000)
                             bookDao.insertBooks(bookData)
                         }
                     }
@@ -37,12 +42,13 @@ class LibraryRepo(private val bookDao: BookDao, private val executors: AppExecut
             }
             fromDB.observeForever(observer)
             executors.mainThread().execute {
+                Log.d("LibraryRep - mainThread", "current thread ${Thread.currentThread().name}")
                 result.addSource(bookDao.getBooks(query)) {
                     result.value = if (it != null && it.isNotEmpty()) {
                         val withHeaders = DataGeneration.addSectionHeadersToList(it)
                         Resource.success(withHeaders)
                     } else {
-                        Resource.error("oops, something went wrong", null)
+                        Resource.error("no data there", null)
                     }
                 }
             }

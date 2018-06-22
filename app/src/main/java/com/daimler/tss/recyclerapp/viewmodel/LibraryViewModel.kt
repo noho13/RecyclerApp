@@ -17,46 +17,21 @@ class LibraryViewModel(private val repo: LibraryRepo) : ViewModel() {
 
     private val fetchData = MutableLiveData<Boolean>()
     var data: LiveData<Resource<List<Item>>> = MutableLiveData<Resource<List<Item>>>()
-    private var sortDescending = true
+    private var sortDescending = false
 
     init {
         data = Transformations.switchMap(fetchData) { input ->
             if (input == null) {
                 AbsentLiveData.create()
             } else {
-                repo.loadData()
+                repo.loadData(sortDescending)
             }
         }
     }
 
-//    fun toggleSortOrder(data: LiveData<Resource<List<Item>>>): LiveData<Resource<List<Item>>> {
-//
-//    }
-
-
-//    private fun insertHeadersToData(): LiveData<Resource<List<Item>>> {
-//
-//    }
-
     fun loadData() {
-//        repo.loadData()
-
+        sortDescending = !sortDescending
         fetchData.value = true
-//        data.value = Resource.loading(null)
-//        disposable = bookDao
-//                .getBooks()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .map {
-//                    sortDescending = !sortDescending
-//                    if (sortDescending) it.sortedByDescending { it.publicationDate } else it
-//                }
-//                .map { DataGeneration.addSectionHeadersToList(it) }
-//                .map { Resource.success(it) }
-//                .subscribe(
-//                        { data.value = it },
-//                        { data.value = Resource.error("oops, an error", null) }
-//                )
     }
 
 

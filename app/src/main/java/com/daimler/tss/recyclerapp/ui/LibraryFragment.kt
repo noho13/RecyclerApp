@@ -67,7 +67,10 @@ class LibraryFragment : Fragment() {
                     }
                 }
             })
-            libViewModel.loadData()
+            if (savedInstanceState == null) {
+                libViewModel.loadData()
+
+            }
         }
     }
 
@@ -78,7 +81,7 @@ class LibraryFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         return if (item?.itemId == R.id.sort) {
-//            libViewModel.toggleSortOrder()
+            libViewModel.loadData()
             true
         } else {
             return super.onOptionsItemSelected(item)

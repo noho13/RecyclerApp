@@ -39,7 +39,7 @@ class LibraryFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        recyclerViewAdapter = RecyclerViewAdapter(listOf())
+        recyclerViewAdapter = RecyclerViewAdapter()
         rv_vertical.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
@@ -86,7 +86,6 @@ class LibraryFragment : Fragment() {
         } else {
             return super.onOptionsItemSelected(item)
         }
-
     }
 
     companion object {

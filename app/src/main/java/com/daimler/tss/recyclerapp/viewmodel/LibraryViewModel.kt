@@ -33,6 +33,4 @@ class LibraryViewModel(private val repo: LibraryRepo) : ViewModel() {
         sortDescending = !sortDescending
         fetchData.value = true
     }
-
-
 }

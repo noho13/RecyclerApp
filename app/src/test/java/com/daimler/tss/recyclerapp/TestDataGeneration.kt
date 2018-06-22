@@ -11,8 +11,7 @@ import java.util.*
 
 
 /**
- * Created by Daimler TSS GmbH on 19.06.18 10:22.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 @RunWith(JUnit4::class)
 class TestDataGeneration {

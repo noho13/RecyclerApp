@@ -10,8 +10,7 @@ import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 
 /**
- * Created by Daimler TSS GmbH on 19.06.18 10:18.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 
 object DataGeneration {

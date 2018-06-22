@@ -10,8 +10,7 @@ import com.daimler.tss.recyclerapp.items.Item
 import com.daimler.tss.recyclerapp.repo.LibraryRepo
 
 /**
- * Created by Daimler TSS GmbH on 18.06.18 15:27.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 class LibraryViewModel(private val repo: LibraryRepo) : ViewModel() {
 

@@ -7,8 +7,7 @@ import android.arch.persistence.room.TypeConverters
 import android.content.Context
 
 /**
- * Created by Daimler TSS GmbH on 19.06.18 13:48.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 @Database(entities = [Book::class], version = 1)
 @TypeConverters(Converters::class)

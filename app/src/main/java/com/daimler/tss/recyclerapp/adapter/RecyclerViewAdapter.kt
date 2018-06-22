@@ -15,8 +15,7 @@ import kotlinx.android.synthetic.main.section_item.view.*
 import kotlinx.android.synthetic.main.vertical_item.view.*
 
 /**
- * Created by Daimler TSS GmbH on 18.06.18 13:22.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 class RecyclerViewAdapter(var data: List<Item> = listOf()) : RecyclerView.Adapter<RecyclerViewAdapter.ItemViewHolder>() {
 

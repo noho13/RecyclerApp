@@ -3,8 +3,7 @@ package com.daimler.tss.recyclerapp
 import android.arch.lifecycle.LiveData
 
 /**
- * Created by Daimler TSS GmbH on 21.06.18 08:51.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 class AbsentLiveData<T> private constructor() : LiveData<T>() {
     init {

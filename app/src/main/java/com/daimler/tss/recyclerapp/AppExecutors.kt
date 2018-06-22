@@ -6,8 +6,7 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 /**
- * Created by Daimler TSS GmbH on 21.06.18 08:44.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 
 class AppExecutors(

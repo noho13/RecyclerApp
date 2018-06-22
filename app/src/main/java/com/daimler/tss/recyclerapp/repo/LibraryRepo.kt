@@ -13,8 +13,7 @@ import com.daimler.tss.recyclerapp.db.BookDao
 import com.daimler.tss.recyclerapp.items.Item
 
 /**
- * Created by Daimler TSS GmbH on 21.06.18 08:43.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 class LibraryRepo(private val bookDao: BookDao, private val executors: AppExecutors) {
 

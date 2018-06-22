@@ -5,8 +5,7 @@ import java.util.*
 
 
 /**
- * Created by Daimler TSS GmbH on 20.06.18 08:47.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 object Converters {
     @TypeConverter

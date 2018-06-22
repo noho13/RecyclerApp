@@ -18,8 +18,7 @@ import com.daimler.tss.recyclerapp.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fr_main.*
 
 /**
- * Created by Daimler TSS GmbH on 18.06.18 13:05.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 class LibraryFragment : Fragment() {
 

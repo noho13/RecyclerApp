@@ -6,8 +6,7 @@ import android.arch.persistence.room.*
 
 
 /**
- * Created by Daimler TSS GmbH on 19.06.18 13:46.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 @Dao
 interface BookDao {

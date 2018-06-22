@@ -8,8 +8,7 @@ import com.daimler.tss.recyclerapp.repo.LibraryRepo
 import com.daimler.tss.recyclerapp.viewmodel.ViewModelFactory
 
 /**
- * Created by Daimler TSS GmbH on 20.06.18 09:20.
- * Copyright (c) 2018. Daimler AG. All rights reserved.
+ * Created by Norman Hoeller
  */
 object Injection {
 

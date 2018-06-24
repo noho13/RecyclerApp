@@ -1,6 +1,9 @@
 package com.norman.hoeller.recyclerapp
 
 import com.norman.hoeller.recyclerapp.data.DataGeneration
+import com.norman.hoeller.recyclerapp.db.Book
+import com.norman.hoeller.recyclerapp.items.SectionItem
+import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Before
@@ -49,6 +52,32 @@ class TestDataGeneration {
         val dateWithinThirdWeek = calendar.time
         val weekForDate = DataGeneration.getCalendarWeekForDate(dateWithinThirdWeek)
         assertThat(weekForDate, `is`("Week 3"))
+    }
+
+    @Test
+    fun addSectionHeaderToList() {
+        val sortedListOfBooks = listOf(getBookForWeek(2),
+                getBookForWeek(3))
+                .sortedBy { it.publicationDate }
+
+        val sectionedList = DataGeneration.addSectionHeadersToList(sortedListOfBooks)
+        val sectionItemWeek2 = sectionedList[0]
+        assertThat(sectionItemWeek2, instanceOf(SectionItem::class.java))
+        assertThat((sectionItemWeek2 as SectionItem).calendarWeek, `is`("Week 2"))
+        val sectionItemWeek3 = sectionedList[2]
+        assertThat((sectionItemWeek3 as SectionItem).calendarWeek, `is`("Week 3"))
+    }
+
+    private fun getDateForWeek(week: Int): Date {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, 2018)
+        calendar.set(Calendar.MONTH, 0)
+        calendar.set(Calendar.WEEK_OF_YEAR, week)
+        return calendar.time
+    }
+
+    private fun getBookForWeek(week: Int): Book {
+        return Book(title = "foo", description = "bar", publicationDate = getDateForWeek(week))
     }
 
 }

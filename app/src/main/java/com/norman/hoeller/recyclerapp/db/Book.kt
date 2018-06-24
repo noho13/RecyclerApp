@@ -9,7 +9,7 @@ import java.util.*
 
 @Entity
 data class Book(
-        @PrimaryKey(autoGenerate = true) var id: Long?,
+        @PrimaryKey(autoGenerate = true) var id: Long? = null,
         @ColumnInfo val title: String,
         @ColumnInfo val description: String,
         @ColumnInfo val publicationDate: Date

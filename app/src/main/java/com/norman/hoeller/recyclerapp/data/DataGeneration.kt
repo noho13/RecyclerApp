@@ -33,7 +33,9 @@ object DataGeneration {
         return Date(random)
     }
 
-    internal fun getBookItem() = Book(null, "book title", "book description", randomDate())
+    internal fun getBookItem() = Book(title = "book title",
+            description =  "book description",
+            publicationDate =  randomDate())
 
     @VisibleForTesting
     fun getCalendarWeekForDate(date: Date): String {

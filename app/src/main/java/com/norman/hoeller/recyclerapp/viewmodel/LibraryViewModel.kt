@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
+import android.support.annotation.VisibleForTesting
 import com.norman.hoeller.recyclerapp.AbsentLiveData
 import com.norman.hoeller.recyclerapp.data.Resource
 import com.norman.hoeller.recyclerapp.items.Item

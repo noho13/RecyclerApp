@@ -3,6 +3,7 @@ package com.norman.hoeller.recyclerapp
 import com.norman.hoeller.recyclerapp.data.DataGeneration
 import com.norman.hoeller.recyclerapp.db.Book
 import com.norman.hoeller.recyclerapp.items.SectionItem
+import com.norman.hoeller.recyclerapp.util.getBookForWeek
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -68,16 +69,8 @@ class TestDataGeneration {
         assertThat((sectionItemWeek3 as SectionItem).calendarWeek, `is`("Week 3"))
     }
 
-    private fun getDateForWeek(week: Int): Date {
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.YEAR, 2018)
-        calendar.set(Calendar.MONTH, 0)
-        calendar.set(Calendar.WEEK_OF_YEAR, week)
-        return calendar.time
-    }
 
-    private fun getBookForWeek(week: Int): Book {
-        return Book(title = "foo", description = "bar", publicationDate = getDateForWeek(week))
-    }
+
+
 
 }
